@@ -4,8 +4,10 @@ import { Router } from './containers/Router';
 
 const App: React.FC = () => {
     return (
-        <div>
-            <Router />
+        <div className="main">
+            <div className="sub-main">
+                <Router />
+            </div>
         </div>
     );
 }
