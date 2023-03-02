@@ -25,13 +25,24 @@ export const SignUp: React.FC = () => {
         navigate(path);
     }, []);
 
+    const handleValidEmail = React.useCallback((emailValue: any) => {
+        return /\S+@\S+\.\S+/.test(emailValue);
+    }, []);
+
     const handleClick = React.useCallback(() => {
         // TODO: validate password and confirm password
         // 1. confirmPasswordValue should be the same as passwordValue2
         // 2. add validation of email
         // 3. if email is not valid or confirmPassword is not the same as password => button should be disabled
-        console.log(emailValue, passwordValue, confirmPasswordValue);
-    }, [emailValue, passwordValue, confirmPasswordValue]);
+
+        if (handleValidEmail(emailValue)) {
+            console.log(emailValue);
+        } else {
+            console.log('Email is invalid');
+        }
+
+        console.log(passwordValue, confirmPasswordValue);
+    }, [emailValue, passwordValue, confirmPasswordValue, handleValidEmail]);
 
     return (
         <div className="rectangle">

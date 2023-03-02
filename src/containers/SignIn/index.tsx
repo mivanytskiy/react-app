@@ -5,6 +5,7 @@ import LogoImage from "../../assets/images/logo.jpg";
 export const SignIn: React.FC = () => {
     const [emailValue, setEmailValue] = React.useState<string>('');
     const [passwordValue, setPasswordValue] = React.useState<string>('');
+    //const [isDisabled, setIsDisabled] = React.useState(true);
 
     const handleChangeEmailValue = React.useCallback((e: any) => {
         setEmailValue(e.target.value);
@@ -14,11 +15,22 @@ export const SignIn: React.FC = () => {
         setPasswordValue(e.target.value);
     }, []);
 
+    const handleValidEmail = React.useCallback((emailValue: any) => {
+        return /\S+@\S+\.\S+/.test(emailValue);
+    }, []);
+
     const handleClick = React.useCallback(() => {
         // 1. add validation of email
         // 2. if email is not valid => button should be disabled
-        console.log(emailValue, passwordValue);
-    }, [emailValue, passwordValue]);
+        if (handleValidEmail(emailValue)) {
+            console.log(emailValue);
+        }   
+        // else {  
+        //     setIsDisabled(!handleValidEmail(emailValue));
+        // }
+
+        console.log(passwordValue);
+    }, [emailValue, passwordValue, handleValidEmail]);
 
     return (
         <div className="rectangle">
@@ -51,9 +63,9 @@ export const SignIn: React.FC = () => {
                 </div>
             </div>
             <div className="footer">
-                <div className="button" onClick={handleClick}>
+                <button className="button" onClick={handleClick} >
                     Sign in
-                </div>
+                </button>
             </div>
         </div>
     );
