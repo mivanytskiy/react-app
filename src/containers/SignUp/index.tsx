@@ -6,7 +6,7 @@ export const SignUp: React.FC = () => {
     const [emailValue, setEmailValue] = React.useState<string>('');
     const [passwordValue, setPasswordValue] = React.useState<string>('');
     const [confirmPasswordValue, setConfirmPasswordValue] = React.useState<string>('');
-
+    const [isDisabled, setIsDisabled] = React.useState(true);
     const navigate = useNavigate();
 
     const handleChangeEmailValue = React.useCallback((e: any) => {
@@ -37,11 +37,21 @@ export const SignUp: React.FC = () => {
 
         if (handleValidEmail(emailValue)) {
             console.log(emailValue);
+            
         } else {
-            console.log('Email is invalid');
+            console.log('Invalid email');
         }
 
-        console.log(passwordValue, confirmPasswordValue);
+        if (passwordValue === confirmPasswordValue) {
+            console.log(passwordValue, confirmPasswordValue);
+        } else {
+            console.log('Invalid password')
+        }
+
+    }, [emailValue, passwordValue, confirmPasswordValue, handleValidEmail]);
+
+    React.useEffect(() => {
+        setIsDisabled((!handleValidEmail(emailValue) || (passwordValue.length <= 0 && confirmPasswordValue.length <= 0) || !(passwordValue === confirmPasswordValue)));
     }, [emailValue, passwordValue, confirmPasswordValue, handleValidEmail]);
 
     return (
@@ -80,9 +90,9 @@ export const SignUp: React.FC = () => {
                     {/* TODO: return user to the previous page */}
                     Back
                 </div>
-                <div className="button-create" onClick={handleClick}>
+                <button className="button-create" onClick={handleClick} disabled={isDisabled}>
                     Sign up
-                </div>
+                </button>
             </div>
         </div> 
     );
